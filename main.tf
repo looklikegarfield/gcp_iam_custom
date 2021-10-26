@@ -8,7 +8,7 @@ data "google_iam_policy" "admin" {
     role = "roles/editor"
 
     members = [
-      "user:jane@example.com",
+      "user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
     ]
   }
 }
@@ -18,13 +18,13 @@ resource "google_project_iam_binding" "project" {
   role    = "roles/container.admin"
 
   members = [
-    "user:jane@example.com",
+    "user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
   ]
 }
 
 resource "google_project_iam_member" "project" {
   project = var.project_id
   role    = "roles/editor"
-  member  = "user:jane@example.com"
+  member  = "user:abhishek@loyal-network-323915.iam.gserviceaccount.com"
 }
 

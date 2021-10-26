@@ -1,0 +1,158 @@
+import "strings"
+import "types"
+
+_modules = {
+	"root": {
+		"data": {
+			"google_iam_policy": {
+				"admin": {
+					"config": {
+						"binding": [
+							{
+								"members": [
+									"user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+								],
+								"role": "roles/editor",
+							},
+						],
+					},
+					"provisioners": null,
+					"references": {
+						"binding": [
+							{
+								"members": [],
+								"role":    [],
+							},
+						],
+					},
+				},
+			},
+		},
+		"modules": {},
+		"outputs": {},
+		"providers": {
+			"google": {
+				"alias": {
+					"": {
+						"config": {
+							"region": "us-west2",
+						},
+						"references": {
+							"access_token": [
+								"var.access_token",
+							],
+							"project": [
+								"var.project_id",
+							],
+							"region": [],
+						},
+						"version": "3.5.0",
+					},
+				},
+				"config": {
+					"region": "us-west2",
+				},
+				"references": {
+					"access_token": [
+						"var.access_token",
+					],
+					"project": [
+						"var.project_id",
+					],
+					"region": [],
+				},
+				"version": "3.5.0",
+			},
+		},
+		"resources": {
+			"google_project_iam_binding": {
+				"project": {
+					"config": {
+						"members": [
+							"user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+						],
+						"role": "roles/container.admin",
+					},
+					"provisioners": null,
+					"references": {
+						"members": [],
+						"project": [
+							"var.project_id",
+						],
+						"role": [],
+					},
+				},
+			},
+			"google_project_iam_member": {
+				"project": {
+					"config": {
+						"member": "user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+						"role":   "roles/editor",
+					},
+					"provisioners": null,
+					"references": {
+						"member": [],
+						"project": [
+							"var.project_id",
+						],
+						"role": [],
+					},
+				},
+			},
+			"google_project_iam_policy": {
+				"project": {
+					"config":       {},
+					"provisioners": null,
+					"references": {
+						"policy_data": [
+							"data.google_iam_policy.admin.policy_data",
+							"data.google_iam_policy.admin",
+						],
+						"project": [
+							"var.project_id",
+						],
+					},
+				},
+			},
+		},
+		"variables": {
+			"access_token": {
+				"default":     null,
+				"description": "",
+			},
+			"project_id": {
+				"default":     null,
+				"description": "",
+			},
+		},
+	},
+}
+
+module_paths = [
+	[],
+]
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+modules = _modules.root.modules
+providers = _modules.root.providers
+resources = _modules.root.resources
+variables = _modules.root.variables
+outputs = _modules.root.outputs

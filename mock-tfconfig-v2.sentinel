@@ -1,0 +1,162 @@
+import "strings"
+
+providers = {
+	"google": {
+		"alias": "",
+		"config": {
+			"access_token": {
+				"references": [
+					"var.access_token",
+				],
+			},
+			"project": {
+				"references": [
+					"var.project_id",
+				],
+			},
+			"region": {
+				"constant_value": "us-west2",
+			},
+		},
+		"module_address":      "",
+		"name":                "google",
+		"provider_config_key": "google",
+		"version_constraint":  "3.5.0",
+	},
+}
+
+resources = {
+	"data.google_iam_policy.admin": {
+		"address": "data.google_iam_policy.admin",
+		"config": {
+			"binding": [
+				{
+					"members": {
+						"constant_value": [
+							"user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+						],
+					},
+					"role": {
+						"constant_value": "roles/editor",
+					},
+				},
+			],
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "",
+		"name":                "admin",
+		"provider_config_key": "google",
+		"provisioners":        [],
+		"type":                "google_iam_policy",
+	},
+	"google_project_iam_binding.project": {
+		"address": "google_project_iam_binding.project",
+		"config": {
+			"members": {
+				"constant_value": [
+					"user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+				],
+			},
+			"project": {
+				"references": [
+					"var.project_id",
+				],
+			},
+			"role": {
+				"constant_value": "roles/container.admin",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "project",
+		"provider_config_key": "google",
+		"provisioners":        [],
+		"type":                "google_project_iam_binding",
+	},
+	"google_project_iam_member.project": {
+		"address": "google_project_iam_member.project",
+		"config": {
+			"member": {
+				"constant_value": "user:abhishek@loyal-network-323915.iam.gserviceaccount.com",
+			},
+			"project": {
+				"references": [
+					"var.project_id",
+				],
+			},
+			"role": {
+				"constant_value": "roles/editor",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "project",
+		"provider_config_key": "google",
+		"provisioners":        [],
+		"type":                "google_project_iam_member",
+	},
+	"google_project_iam_policy.project": {
+		"address": "google_project_iam_policy.project",
+		"config": {
+			"policy_data": {
+				"references": [
+					"data.google_iam_policy.admin.policy_data",
+					"data.google_iam_policy.admin",
+				],
+			},
+			"project": {
+				"references": [
+					"var.project_id",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "project",
+		"provider_config_key": "google",
+		"provisioners":        [],
+		"type":                "google_project_iam_policy",
+	},
+}
+
+provisioners = {}
+
+variables = {
+	"access_token": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "access_token",
+	},
+	"project_id": {
+		"default":        null,
+		"description":    "",
+		"module_address": "",
+		"name":           "project_id",
+	},
+}
+
+outputs = {}
+
+module_calls = {}
+
+strip_index = func(addr) {
+	s = strings.split(addr, ".")
+	for s as i, v {
+		s[i] = strings.split(v, "[")[0]
+	}
+
+	return strings.join(s, ".")
+}

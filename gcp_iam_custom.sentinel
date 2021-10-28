@@ -1,23 +1,25 @@
-# This policy uses the tfconfig/v2 import to prohibit resources
-# from a prohibited list
+import "tfplan/v2" as tfplan
 
-# Import common-functions/tfconfig-functions/tfconfig-functions.sentinel
-# with alias "config"
-import "tfconfig-functions" as config
-import "tfconfig/v2" as tfconfig
+allResources = filter tfplan.resource_changes as address, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "google_project_iam_custom_role" or
+		resource_changes.type is "google_organization_iam_custom_role" and
+			(resource_changes.change.actions contains "create" or
+				resource_changes.change.actions is ["update"])
+}
 
-# List of prohibited resources
-prohibited_list = ["google_project_iam_custom_role", "google_organization_iam_custom_role"]
+deny_restricted_resource_configuration = rule {
+	all allResources as address, resource {
+		keys(resource.change) contains "type"
+	}
+}
 
-# Get all Resources
-allResources = config.find_all_resources()
+deny_project_iam_role = rule when deny_restricted_resource_configuration is true {
+	all allResources as address, resource {
+		length(resource.change.type) == 0
+	}
+}
 
-# Filter to resources with violations
-# Warnings will be printed for all violations since the last parameter is true
-violatingResources = config.filter_attribute_in_list(allResources,
-                     "type", prohibited_list, true)
-
-# Main rule
 main = rule {
- length(violatingResources["messages"]) is 0
+	deny_restricted_resource_configuration
 }

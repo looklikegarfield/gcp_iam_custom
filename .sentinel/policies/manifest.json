@@ -1,0 +1,10 @@
+{
+	"records": [
+		{
+			"key": "gcp_iam_custom",
+			"source": "./gcp_iam_custom.sentinel",
+			"sourceSum": "",
+			"dest": "/home/tiwarabhishek/gcp_iam_custom/gcp_iam_custom.sentinel"
+		}
+	]
+}

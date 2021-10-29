@@ -3,7 +3,7 @@ import "tfplan/v2" as tfplan
 
 deny_services = ["google_project_iam_custom_role", "google_organization_iam_custom_role"]
 
-# Fetch all resources based on resourceTypes
+# Fetch all resources based on deny_services
 allResources = {}
 for deny_services as rt {
 	resources = plan.find_resources(rt)
@@ -14,11 +14,11 @@ for deny_services as rt {
 
 #print(allResources)
 
-# Fetch all resources which are not allowed as per deny_services list
+# Fetch all resources which are not allowed as per deny services list
 violatingResources = plan.filter_attribute_not_contains_list(allResources,
 	"type", deny_services, true)
 
-# Rule to evaluate deny_services list
+# Rule to evaluate deny services list
 main = rule {
 	length(violatingResources["messages"]) is 0
 }

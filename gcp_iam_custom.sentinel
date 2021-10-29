@@ -12,13 +12,13 @@ for deny_services as rt {
 	}
 }
 
-print(allResources)
+#print(allResources)
 
 # Fetch all resources which are not allowed as per deny_services list
 violatingResources = plan.filter_attribute_not_contains_list(allResources,
 	"type", deny_services, true)
 
-# Rule to evaluate mandatory_labels
+# Rule to evaluate deny_services list
 main = rule {
 	length(violatingResources["messages"]) is 0
 }

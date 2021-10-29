@@ -1,13 +1,13 @@
 {
 	"records": [
 		{
-			"key": "test/gcp_iam_custom/pass/tfplan-functions",
+			"key": "test/gcp_iam_custom/fail/tfplan-functions",
 			"source": "../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "/home/tiwarabhishek/gcp_iam_custom/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test/gcp_iam_custom/fail/tfplan-functions",
+			"key": "test/gcp_iam_custom/pass/tfplan-functions",
 			"source": "../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "/home/tiwarabhishek/gcp_iam_custom/common-functions/tfplan-functions/tfplan-functions.sentinel"

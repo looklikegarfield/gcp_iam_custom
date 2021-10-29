@@ -22,29 +22,6 @@ planned_values = {
 				"role":    "roles/container.admin",
 			},
 		},
-		"google_project_iam_custom_role.my-custom-role": {
-			"address":        "google_project_iam_custom_role.my-custom-role",
-			"depends_on":     [],
-			"deposed_key":    "",
-			"index":          null,
-			"mode":           "managed",
-			"module_address": "",
-			"name":           "my-custom-role",
-			"provider_name":  "registry.terraform.io/hashicorp/google",
-			"tainted":        false,
-			"type":           "google_project_iam_custom_role",
-			"values": {
-				"description": "A description",
-				"permissions": [
-					"iam.roles.create",
-					"iam.roles.delete",
-					"iam.roles.list",
-				],
-				"role_id": "myCustomRole",
-				"stage":   "GA",
-				"title":   "My Custom Role",
-			},
-		},
 		"google_project_iam_member.project": {
 			"address":        "google_project_iam_member.project",
 			"depends_on":     [],
@@ -122,43 +99,6 @@ resource_changes = {
 		"name":           "project",
 		"provider_name":  "registry.terraform.io/hashicorp/google",
 		"type":           "google_project_iam_binding",
-	},
-	"google_project_iam_custom_role.my-custom-role": {
-		"address": "google_project_iam_custom_role.my-custom-role",
-		"change": {
-			"actions": [
-				"create",
-			],
-			"after": {
-				"description": "A description",
-				"permissions": [
-					"iam.roles.create",
-					"iam.roles.delete",
-					"iam.roles.list",
-				],
-				"role_id": "myCustomRole",
-				"stage":   "GA",
-				"title":   "My Custom Role",
-			},
-			"after_unknown": {
-				"deleted": true,
-				"id":      true,
-				"permissions": [
-					false,
-					false,
-					false,
-				],
-				"project": true,
-			},
-			"before": null,
-		},
-		"deposed":        "",
-		"index":          null,
-		"mode":           "managed",
-		"module_address": "",
-		"name":           "my-custom-role",
-		"provider_name":  "registry.terraform.io/hashicorp/google",
-		"type":           "google_project_iam_custom_role",
 	},
 	"google_project_iam_member.project": {
 		"address": "google_project_iam_member.project",
@@ -262,32 +202,6 @@ raw = {
 					"type":                "google_project_iam_binding",
 				},
 				{
-					"address": "google_project_iam_custom_role.my-custom-role",
-					"expressions": {
-						"description": {
-							"constant_value": "A description",
-						},
-						"permissions": {
-							"constant_value": [
-								"iam.roles.list",
-								"iam.roles.create",
-								"iam.roles.delete",
-							],
-						},
-						"role_id": {
-							"constant_value": "myCustomRole",
-						},
-						"title": {
-							"constant_value": "My Custom Role",
-						},
-					},
-					"mode":                "managed",
-					"name":                "my-custom-role",
-					"provider_config_key": "google",
-					"schema_version":      0,
-					"type":                "google_project_iam_custom_role",
-				},
-				{
 					"address": "google_project_iam_member.project",
 					"expressions": {
 						"member": {
@@ -385,32 +299,6 @@ raw = {
 						],
 						"project": "REDACTED_SENSITIVE",
 						"role":    "roles/container.admin",
-					},
-				},
-				{
-					"address":        "google_project_iam_custom_role.my-custom-role",
-					"mode":           "managed",
-					"name":           "my-custom-role",
-					"provider_name":  "registry.terraform.io/hashicorp/google",
-					"schema_version": 0,
-					"sensitive_values": {
-						"permissions": [
-							false,
-							false,
-							false,
-						],
-					},
-					"type": "google_project_iam_custom_role",
-					"values": {
-						"description": "A description",
-						"permissions": [
-							"iam.roles.create",
-							"iam.roles.delete",
-							"iam.roles.list",
-						],
-						"role_id": "myCustomRole",
-						"stage":   "GA",
-						"title":   "My Custom Role",
 					},
 				},
 				{
@@ -521,48 +409,6 @@ raw = {
 			"name":          "project",
 			"provider_name": "registry.terraform.io/hashicorp/google",
 			"type":          "google_project_iam_binding",
-		},
-		{
-			"address": "google_project_iam_custom_role.my-custom-role",
-			"change": {
-				"actions": [
-					"create",
-				],
-				"after": {
-					"description": "A description",
-					"permissions": [
-						"iam.roles.create",
-						"iam.roles.delete",
-						"iam.roles.list",
-					],
-					"role_id": "myCustomRole",
-					"stage":   "GA",
-					"title":   "My Custom Role",
-				},
-				"after_sensitive": {
-					"permissions": [
-						false,
-						false,
-						false,
-					],
-				},
-				"after_unknown": {
-					"deleted": true,
-					"id":      true,
-					"permissions": [
-						false,
-						false,
-						false,
-					],
-					"project": true,
-				},
-				"before":           null,
-				"before_sensitive": false,
-			},
-			"mode":          "managed",
-			"name":          "my-custom-role",
-			"provider_name": "registry.terraform.io/hashicorp/google",
-			"type":          "google_project_iam_custom_role",
 		},
 		{
 			"address": "google_project_iam_member.project",

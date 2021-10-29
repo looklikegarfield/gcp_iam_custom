@@ -1,0 +1,25 @@
+import "tfplan/v2" as tfplan
+
+allResources = filter tfplan.resource_changes as address, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "google_project_iam_custom_role" or
+		resource_changes.type is "google_organization_iam_custom_role" and
+			(resource_changes.change.actions contains "create" or
+				resource_changes.change.actions is ["update"])
+}
+
+deny_restricted_resource_configuration = rule {
+	all allResources as address, resource {
+		keys(resource.change) contains "type"
+	}
+}
+
+deny_project_iam_role = rule when deny_restricted_resource_configuration is true {
+	all allResources as address, resource {
+		length(resource.change.type) == 0
+	}
+}
+
+main = rule {
+	deny_restricted_resource_configuration
+}

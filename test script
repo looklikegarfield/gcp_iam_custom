@@ -1,0 +1,29 @@
+#find_gcp_resources = func() {
+#  resources = filter tfplan.resource_changes as address, rc {
+#    #rc.provider_name is "registry.terraform.io/hashicorp/google" and
+#  	rc.mode is "managed" and
+#  	(rc.change.actions contains "create" or rc.change.actions contains "update")
+#  }
+#  return resources
+#}
+#
+#all_resources = find_gcp_resources()
+#
+#for all_resources as address, rc {
+#  type = rc["type"]
+#  if type in deny_services {
+#    messages[address] = "resource of type " + type + " is not allowed. "
+#  }
+#}
+#print(resources)
+###violatingResources = plan.filter_attribute_in_list(resources, "type", deny_services, true)
+##violatingResources = plan.filter_attribute_not_contains_list(resources, "type", deny_services, true)
+#
+#print(messages)
+#
+#UNAPPROVED_SERVICES = rule { length(messages) is 0 }
+#main = rule { UNAPPROVED_SERVICES }
+#
+##main = rule {
+##  length(violatingResources["messages"]) is 0
+##}
